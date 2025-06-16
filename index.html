@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>餐饮满意度调查问卷</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --secondary-color: #2196F3;
+            --secondary-hover: #0b7dda;
+            --warning-color: #ff9800;
+            --warning-hover: #e68a00;
+            --danger-color: #f44336;
+            --danger-hover: #d32f2f;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+            --text-color: #333;
+            --error-color: #f44336;
+            --spacing-unit: 20px;
+            --border-radius: 8px;
+            --transition-time: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-unit);
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.6;
+            touch-action: manipulation;
+        }
+
+        h1, h2 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all var(--transition-time) ease;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-unit);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            transition: border-color var(--transition-time);
+            -webkit-appearance: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group,
+        .checkbox-group,
+        .rating-group {
+            margin-top: 10px;
+        }
+
+        .radio-option,
+        .checkbox-option,
+        .rating-option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+            width: auto;
+            min-width: 20px;
+            min-height: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: all var(--transition-time);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-warning:hover {
+            background-color: var(--warning-hover);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+        }
+
+        .thank-you {
+            text-align: center;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .thank-you h2 {
+            color: var(--primary-color);
+        }
+
+        .recommendation-group {
+            margin-top: 15px;
+        }
+
+        .data-view {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 600px;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .field-error {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .admin-actions {
+            margin-top: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            width: 48%;
+        }
+
+        .reason-options {
+            margin-top: 10px;
+        }
+
+        .reason-option {
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .rating-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            touch-action: manipulation;
+        }
+
+        .rating-star {
+            font-size: 30px;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 0 5px;
+            user-select: none;
+        }
+
+        .rating-star:hover,
+        .rating-star.active {
+            color: #ffcc00;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* 加载指示器样式 */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .fullscreen-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .fullscreen-loader .loader {
+            width: 40px;
+            height: 40px;
+            border-width: 5px;
+        }
+
+        .button-loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button-text {
+            transition: opacity 0.3s;
+        }
+
+        .button-loading .button-text {
+            opacity: 0;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-buttons button {
+                width: 100%;
+            }
+
+            .admin-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .admin-actions button {
+                width: 100%;
+            }
+
+            input[type="date"],
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            input[type="number"],
+            select,
+            textarea {
+                font-size: 16px;
+                padding: 14px;
+            }
+
+            .rating-star {
+                font-size: 36px;
+                padding: 0 8px;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            .form-container {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            button {
+                display: none;
+            }
+        }
+        
+        /* 新增删除按钮样式 */
+        .delete-btn {
+            width: auto;
+            padding: 4px 8px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .action-cell {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <!-- 问卷首页 -->
+        <div id="homeSection" class="fade-in">
+            <h1>餐饮满意度调查问卷系统</h1>
+            <div class="nav-buttons">
+                <button id="startSurveyBtn" class="btn-primary">填写问卷</button>
+                <button id="viewDataLoginBtn" class="btn-secondary">查看数据(需登录)</button>
+            </div>
+        </div>
+
+        <!-- 登录表单 (初始隐藏) -->
+        <div id="loginSection" class="hidden">
+            <h1>管理员登录</h1>
+            <div class="login-form">
+                <div id="loginError" class="error-message hidden"></div>
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" placeholder="请输入用户名" required>
+                    <span class="field-error hidden" id="usernameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" placeholder="请输入密码" required>
+                    <span class="field-error hidden" id="passwordError"></span>
+                </div>
+                <button id="loginBtn" class="btn-primary">
+                    <span class="button-text">登录</span>
+                    <span class="button-loader loader hidden"></span>
+                </button>
+                <button id="cancelLoginBtn" class="btn-warning">返回首页</button>
+            </div>
+        </div>
+
+        <!-- 问卷表单 (初始隐藏) -->
+        <div id="surveySection" class="hidden">
+            <div class="progress-bar">
+                <div class="progress" id="surveyProgress"></div>
+            </div>
+            
+            <h1>餐饮满意度调查问卷</h1>
+            
+            <form id="surveyForm">
+                <div class="section-title">
+                    <div class="section-number">1</div>
+                    <h2>基本信息</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">日期</label>
+                    <input type="date" id="date" name="date" required>
+                    <span class="field-error hidden" id="dateError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerName">您的称呼（可选）</label>
+                    <input type="text" id="customerName" name="customerName" placeholder="请输入您的称呼">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">电子邮箱（可选）</label>
+                    <input type="email" id="email" name="email" placeholder="请输入电子邮箱">
+                    <span class="field-error hidden" id="emailError"></span>
+                </div>
+                
+                <div class="section-title">
+                    <div class="section-number">2</div>
+                    <h2>用餐信息</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label>用餐时段（单选）</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="breakfast" name="mealTime" value="早餐" required>
+                            <label for="breakfast">早餐</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="lunch" name="mealTime" value="午餐">
+                            <label for="lunch">午餐</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="dinner" name="mealTime" value="晚餐">
+                            <label for="dinner">晚餐</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="otherTime" name="mealTime" value="其他时段">
+                            <label for="otherTime">其他时段</label>
+                        </div>
+                    </div>
+                    <span class="field-error hidden" id="mealTimeError"></span>
+                </div>
+                
+                <div class="section-title">
+                    <div class="section-number">3</div>
+                    <h2>满意度评价</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label>整体满意度评分</label>
+                    <div class="rating-container" id="overallRating">
+                        <span class="rating-star" data-value="1">★</span>
+                        <span class="rating-star" data-value="2">★</span>
+                        <span class="rating-star" data-value="3">★</span>
+                        <span class="rating-star" data-value="4">★</span>
+                        <span class="rating-star" data-value="5">★</span>
+                    </div>
+                    <input type="hidden" id="overallRatingValue" name="overallRating" value="0">
+                    <span class="field-error hidden" id="ratingError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label>菜品味道评价</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="taste-excellent" name="taste" value="非常好" required>
+                            <label for="taste-excellent">非常好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="taste-good" name="taste" value="好">
+                            <label for="taste-good">好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="taste-average" name="taste" value="一般">
+                            <label for="taste-average">一般</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="taste-bad" name="taste" value="不好">
+                            <label for="taste-bad">不好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="taste-poor" name="taste" value="差">
+                            <label for="taste-poor">差</label>
+                        </div>
+                    </div>
+                    <span class="field-error hidden" id="tasteError"></span>
+                    
+                    <div id="badDishesSection" class="hidden">
+                        <label for="badDishes">请列出不满意的菜品：</label>
+                        <textarea id="badDishes" name="badDishes" placeholder="请输入不满意的菜品名称"></textarea>
+                        <span class="field-error hidden" id="badDishesError"></span>
+                        
+                        <label>不满意原因（可多选）：</label>
+                        <div class="reason-options">
+                            <div class="reason-option">
+                                <input type="checkbox" id="reason-taste" name="badReason" value="味道不佳">
+                                <label for="reason-taste">味道不佳</label>
+                            </div>
+                            <div class="reason-option">
+                                <input type="checkbox" id="reason-fresh" name="badReason" value="食材不新鲜">
+                                <label for="reason-fresh">食材不新鲜</label>
+                            </div>
+                            <div class="reason-option">
+                                <input type="checkbox" id="reason-temperature" name="badReason" value="温度不合适">
+                                <label for="reason-temperature">温度不合适</label>
+                            </div>
+                            <div class="reason-option">
+                                <input type="checkbox" id="reason-portion" name="badReason" value="分量不足">
+                                <label for="reason-portion">分量不足</label>
+                            </div>
+                            <div class="reason-option">
+                                <input type="checkbox" id="reason-appearance" name="badReason" value="外观不佳">
+                                <label for="reason-appearance">外观不佳</label>
+                            </div>
+                            <div class="reason-option">
+                                <input type="checkbox" id="reason-other" name="badReason" value="其他原因">
+                                <label for="reason-other">其他原因</label>
+                            </div>
+                        </div>
+                        
+                        <div id="otherReasonSection" class="hidden">
+                            <label for="otherReason">请说明其他原因：</label>
+                            <textarea id="otherReason" name="otherReason"></textarea>
+                            <span class="field-error hidden" id="otherReasonError"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>服务质量评价</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="service-excellent" name="service" value="非常好">
+                            <label for="service-excellent">非常好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="service-good" name="service" value="好">
+                            <label for="service-good">好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="service-average" name="service" value="一般">
+                            <label for="service-average">一般</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="service-bad" name="service" value="不好">
+                            <label for="service-bad">不好</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>环境卫生评价</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="cleanliness-excellent" name="cleanliness" value="非常好">
+                            <label for="cleanliness-excellent">非常好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="cleanliness-good" name="cleanliness" value="好">
+                            <label for="cleanliness-good">好</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="cleanliness-average" name="cleanliness" value="一般">
+                            <label for="cleanliness-average">一般</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="cleanliness-bad" name="cleanliness" value="不好">
+                            <label for="cleanliness-bad">不好</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <div class="section-number">4</div>
+                    <h2>菜品推荐</h2>
+                </div>
+                
+                <div class="form-group">
+                    <div class="recommendation-group">
+                        <label for="dishName">您想推荐的菜品名称：</label>
+                        <input type="text" id="dishName" name="dishName" placeholder="请输入推荐的菜品名称">
+                        
+                        <label for="ingredients">食材组成：</label>
+                        <textarea id="ingredients" name="ingredients" placeholder="请列出该菜品的主要食材组成"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">其他意见或建议：</label>
+                    <textarea id="comments" name="comments" placeholder="请提出您的宝贵意见或建议"></textarea>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button type="submit" class="btn-primary">
+                        <span class="button-text">提交问卷</span>
+                        <span class="button-loader loader hidden"></span>
+                    </button>
+                    <button type="button" id="cancelSurveyBtn" class="btn-warning">返回首页</button>
+                </div>
+            </form>
+            
+            <div id="thankYou" class="thank-you hidden">
+                <h2>感谢您的反馈！</h2>
+                <p>您的意见对我们非常重要，我们将根据您的建议不断改进。</p>
+                <p>您将收到一份电子邮件的确认（如果您提供了邮箱地址）。</p>
+                <button id="returnHomeBtn" class="btn-warning">返回首页</button>
+            </div>
+        </div>
+
+        <!-- 数据查看部分 (初始隐藏) -->
+        <div id="dataView" class="hidden">
+            <h1>问卷数据查看</h1>
+            <div class="admin-actions">
+                <button id="newSurveyBtn" class="btn-primary">新建问卷</button>
+                <button id="exportDataBtn" class="btn-secondary">
+                    <span class="button-text">导出数据</span>
+                    <span class="button-loader loader hidden"></span>
+                </button>
+                <button id="analyzeDataBtn" class="btn-secondary">数据分析</button>
+                <button id="logoutBtn" class="btn-danger">退出登录</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="dataFilter">筛选数据：</label>
+                <select id="dataFilter">
+                    <option value="all">全部数据</option>
+                    <option value="today">今天</option>
+                    <option value="week">本周</option>
+                    <option value="month">本月</option>
+                    <option value="negative">负面评价</option>
+                    <option value="positive">正面评价</option>
+                </select>
+            </div>
+            
+            <div id="dataContainer" class="data-view">
+                <div class="fullscreen-loader hidden" id="dataLoader">
+                    <div class="loader"></div>
+                </div>
+            </div>
+            
+            <div id="chartContainer" class="hidden">
+                <h2>满意度统计</h2>
+                <canvas id="satisfactionChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 配置常量
+            const CONFIG = {
+                adminAccount: {
+                    username: "admin",
+                    password: "364532"
+                },
+                localStorageKey: "restaurantSurveys",
+                minPasswordLength: 6
+            };
+
+            // 缓存DOM元素
+            const elements = {
+                // 页面部分
+                homeSection: document.getElementById('homeSection'),
+                loginSection: document.getElementById('loginSection'),
+                surveySection: document.getElementById('surveySection'),
+                dataView: document.getElementById('dataView'),
+                
+                // 表单元素
+                surveyForm: document.getElementById('surveyForm'),
+                date: document.getElementById('date'),
+                customerName: document.getElementById('customerName'),
+                email: document.getElementById('email'),
+                badDishesSection: document.getElementById('badDishesSection'),
+                badDishes: document.getElementById('badDishes'),
+                otherReasonSection: document.getElementById('otherReasonSection'),
+                otherReason: document.getElementById('otherReason'),
+                dishName: document.getElementById('dishName'),
+                ingredients: document.getElementById('ingredients'),
+                comments: document.getElementById('comments'),
+                overallRating: document.getElementById('overallRating'),
+                overallRatingValue: document.getElementById('overallRatingValue'),
+                
+                // 按钮
+                startSurveyBtn: document.getElementById('startSurveyBtn'),
+                viewDataLoginBtn: document.getElementById('viewDataLoginBtn'),
+                loginBtn: document.getElementById('loginBtn'),
+                cancelLoginBtn: document.getElementById('cancelLoginBtn'),
+                cancelSurveyBtn: document.getElementById('cancelSurveyBtn'),
+                returnHomeBtn: document.getElementById('returnHomeBtn'),
+                newSurveyBtn: document.getElementById('newSurveyBtn'),
+                exportDataBtn: document.getElementById('exportDataBtn'),
+                analyzeDataBtn: document.getElementById('analyzeDataBtn'),
+                logoutBtn: document.getElementById('logoutBtn'),
+                
+                // 错误信息
+                loginError: document.getElementById('loginError'),
+                dateError: document.getElementById('dateError'),
+                emailError: document.getElementById('emailError'),
+                mealTimeError: document.getElementById('mealTimeError'),
+                ratingError: document.getElementById('ratingError'),
+                tasteError: document.getElementById('tasteError'),
+                badDishesError: document.getElementById('badDishesError'),
+                otherReasonError: document.getElementById('otherReasonError'),
+                
+                // 数据视图
+                dataContainer: document.getElementById('dataContainer'),
+                dataFilter: document.getElementById('dataFilter'),
+                chartContainer: document.getElementById('chartContainer'),
+                satisfactionChart: document.getElementById('satisfactionChart'),
+                dataLoader: document.getElementById('dataLoader'),
+                
+                // 进度条
+                surveyProgress: document.getElementById('surveyProgress'),
+                
+                // 感谢页面
+                thankYou: document.getElementById('thankYou')
+            };
+
+            // 设置默认日期为今天
+            const today = new Date().toISOString().split('T')[0];
+            if(elements.date) {
+                elements.date.value = today;
+                elements.date.min = new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toISOString().split('T')[0];
+                elements.date.max = today;
+            }
+
+            // 初始化事件监听
+            function initEventListeners() {
+                // 导航按钮
+                elements.startSurveyBtn.addEventListener('click', showSurveySection);
+                elements.viewDataLoginBtn.addEventListener('click', showLoginSection);
+                elements.cancelLoginBtn.addEventListener('click', showHomeSection);
+                elements.cancelSurveyBtn.addEventListener('click', showHomeSection);
+                elements.returnHomeBtn.addEventListener('click', showHomeSection);
+                elements.newSurveyBtn.addEventListener('click', showSurveySection);
+                elements.logoutBtn.addEventListener('click', logout);
+                
+                // 登录表单
+                elements.loginBtn.addEventListener('click', handleLogin);
+                
+                // 问卷表单
+                if(elements.surveyForm) {
+                    elements.surveyForm.addEventListener('submit', handleSurveySubmit);
+                }
+                
+                // 味道评价变化
+                const tasteRadios = document.querySelectorAll('input[name="taste"]');
+                tasteRadios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        if (this.value === '不好' || this.value === '差') {
+                            elements.badDishesSection.classList.remove('hidden');
+                            elements.badDishes.required = true;
+                        } else {
+                            elements.badDishesSection.classList.add('hidden');
+                            elements.badDishes.required = false;
+                        }
+                    });
+                });
+                
+                // 其他原因复选框变化
+                document.getElementById('reason-other').addEventListener('change', function() {
+                    if(this.checked) {
+                        elements.otherReasonSection.classList.remove('hidden');
+                        elements.otherReason.required = true;
+                    } else {
+                        elements.otherReasonSection.classList.add('hidden');
+                        elements.otherReason.required = false;
+                    }
+                });
+                
+                // 评分星星点击事件
+                if(elements.overallRating) {
+                    const stars = elements.overallRating.querySelectorAll('.rating-star');
+                    
+                    // 添加触摸事件支持
+                    stars.forEach(star => {
+                        // 点击/触摸事件
+                        star.addEventListener('click', function() {
+                            const value = parseInt(this.getAttribute('data-value'));
+                            setRating(value);
+                        });
+                        
+                        // 触摸开始事件
+                        star.addEventListener('touchstart', function(e) {
+                            e.preventDefault(); // 防止触摸时页面滚动
+                            const value = parseInt(this.getAttribute('data-value'));
+                            setRating(value);
+                        });
+                        
+                        // 鼠标悬停效果
+                        star.addEventListener('mouseover', function() {
+                            const value = parseInt(this.getAttribute('data-value'));
+                            highlightStars(value);
+                        });
+                        
+                        star.addEventListener('mouseout', function() {
+                            const currentRating = parseInt(elements.overallRatingValue.value);
+                            highlightStars(currentRating);
+                        });
+                    });
+                }
+                
+                // 数据筛选
+                if(elements.dataFilter) {
+                    elements.dataFilter.addEventListener('change', function() {
+                        displayStoredData(this.value);
+                    });
+                }
+                
+                // 导出数据
+                if(elements.exportDataBtn) {
+                    elements.exportDataBtn.addEventListener('click', exportData);
+                }
+                
+                // 数据分析
+                if(elements.analyzeDataBtn) {
+                    elements.analyzeDataBtn.addEventListener('click', toggleDataAnalysis);
+                }
+                
+                // 表单输入验证
+                if(elements.email) {
+                    elements.email.addEventListener('blur', validateEmail);
+                }
+            }
+
+            // 显示不同部分
+            function showSection(section) {
+                // 隐藏所有部分
+                elements.homeSection.classList.add('hidden');
+                elements.loginSection.classList.add('hidden');
+                elements.surveySection.classList.add('hidden');
+                elements.dataView.classList.add('hidden');
+                
+                // 显示目标部分
+                switch(section) {
+                    case 'home':
+                        elements.homeSection.classList.remove('hidden');
+                        break;
+                    case 'login':
+                        elements.loginSection.classList.remove('hidden');
+                        break;
+                    case 'survey':
+                        elements.surveySection.classList.remove('hidden');
+                        elements.surveyForm.style.display = 'block';
+                        elements.thankYou.classList.add('hidden');
+                        updateProgressBar(0);
+                        break;
+                    case 'data':
+                        elements.dataView.classList.remove('hidden');
+                        displayStoredData();
+                        break;
+                }
+            }
+
+            // 简化版导航函数
+            function showHomeSection() { showSection('home'); }
+            function showLoginSection() { showSection('login'); }
+            function showSurveySection() { showSection('survey'); }
+            function showDataView() { showSection('data'); }
+
+            // 评分系统
+            function setRating(value) {
+                elements.overallRatingValue.value = value;
+                highlightStars(value);
+            }
+
+            function highlightStars(value) {
+                const stars = elements.overallRating.querySelectorAll('.rating-star');
+                stars.forEach((star, index) => {
+                    if(index < value) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
+
+            // 登录处理
+            function handleLogin() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                
+                // 简单验证
+                if(!username) {
+                    showError(elements.loginError, '请输入用户名');
+                    return;
+                }
+                
+                if(!password) {
+                    showError(elements.loginError, '请输入密码');
+                    return;
+                }
+                
+                // 显示加载指示器
+                toggleButtonLoading(elements.loginBtn, true);
+                
+                // 模拟网络延迟
+                setTimeout(() => {
+                    // 验证凭据 (实际应用中应该使用服务器验证)
+                    if(username === CONFIG.adminAccount.username && password === CONFIG.adminAccount.password) {
+                        // 登录成功
+                        hideError(elements.loginError);
+                        showDataView();
+                    } else {
+                        showError(elements.loginError, '用户名或密码错误');
+                    }
+                    
+                    // 隐藏加载指示器
+                    toggleButtonLoading(elements.loginBtn, false);
+                }, 800);
+            }
+
+            // 登出
+            function logout() {
+                // 清除表单
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                
+                // 返回首页
+                showHomeSection();
+            }
+
+            // 表单提交处理
+            function handleSurveySubmit(e) {
+                e.preventDefault();
+                
+                // 验证必填字段
+                if(!validateSurveyForm()) {
+                    return;
+                }
+                
+                // 显示加载指示器
+                toggleButtonLoading(elements.surveyForm.querySelector('button[type="submit"]'), true);
+                
+                // 模拟处理延迟
+                setTimeout(() => {
+                    // 收集不满意原因
+                    const badReasons = [];
+                    document.querySelectorAll('input[name="badReason"]:checked').forEach(checkbox => {
+                        badReasons.push(checkbox.value);
+                    });
+                    
+                    // 如果有其他原因，添加到数组中
+                    if(document.getElementById('reason-other').checked && elements.otherReason.value) {
+                        badReasons.push("其他原因：" + elements.otherReason.value);
+                    }
+                    
+                    // 收集表单数据
+                    const formData = {
+                        id: Date.now(), // 为每条记录添加唯一ID
+                        date: elements.date.value,
+                        customerName: elements.customerName.value || '匿名',
+                        email: elements.email.value || '',
+                        mealTime: document.querySelector('input[name="mealTime"]:checked').value,
+                        overallRating: elements.overallRatingValue.value || 0,
+                        taste: document.querySelector('input[name="taste"]:checked').value,
+                        badDishes: elements.badDishes.value || '无',
+                        badReasons: badReasons.join('，') || '无',
+                        service: document.querySelector('input[name="service"]:checked')?.value || '未评价',
+                        cleanliness: document.querySelector('input[name="cleanliness"]:checked')?.value || '未评价',
+                        dishName: elements.dishName.value || '无',
+                        ingredients: elements.ingredients.value || '无',
+                        comments: elements.comments.value || '无',
+                        submitTime: new Date().toLocaleString()
+                    };
+                    
+                    // 保存到本地存储
+                    saveSurveyData(formData);
+                    
+                    // 显示感谢信息
+                    elements.surveyForm.style.display = 'none';
+                    elements.thankYou.classList.remove('hidden');
+                    
+                    // 重置表单
+                    setTimeout(() => {
+                        elements.surveyForm.reset();
+                        elements.surveyForm.style.display = 'block';
+                        elements.badDishesSection.classList.add('hidden');
+                        elements.otherReasonSection.classList.add('hidden');
+                        setRating(0);
+                        showHomeSection();
+                    }, 5000);
+                    
+                    // 隐藏加载指示器
+                    toggleButtonLoading(elements.surveyForm.querySelector('button[type="submit"]'), false);
+                }, 1000);
+            }
+
+            // 验证调查表单
+            function validateSurveyForm() {
+                let isValid = true;
+                
+                // 验证日期
+                if(!elements.date.value) {
+                    showError(elements.dateError, '请选择日期');
+                    isValid = false;
+                } else {
+                    hideError(elements.dateError);
+                }
+                
+                // 验证邮箱格式
+                if(elements.email.value && !validateEmail()) {
+                    isValid = false;
+                }
+                
+                // 验证用餐时段
+                if(!document.querySelector('input[name="mealTime"]:checked')) {
+                    showError(elements.mealTimeError, '请选择用餐时段');
+                    isValid = false;
+                } else {
+                    hideError(elements.mealTimeError);
+                }
+                
+                // 验证评分
+                if(elements.overallRatingValue.value === '0') {
+                    showError(elements.ratingError, '请为整体满意度评分');
+                    isValid = false;
+                } else {
+                    hideError(elements.ratingError);
+                }
+                
+                // 验证味道评价
+                if(!document.querySelector('input[name="taste"]:checked')) {
+                    showError(elements.tasteError, '请评价菜品味道');
+                    isValid = false;
+                } else {
+                    hideError(elements.tasteError);
+                }
+                
+                // 验证不满意菜品
+                const tasteValue = document.querySelector('input[name="taste"]:checked')?.value;
+                if((tasteValue === '不好' || tasteValue === '差') && !elements.badDishes.value.trim()) {
+                    showError(elements.badDishesError, '请列出不满意的菜品');
+                    isValid = false;
+                } else {
+                    hideError(elements.badDishesError);
+                }
+                
+                // 验证其他原因
+                if(document.getElementById('reason-other').checked && !elements.otherReason.value.trim()) {
+                    showError(elements.otherReasonError, '请说明其他原因');
+                    isValid = false;
+                } else {
+                    hideError(elements.otherReasonError);
+                }
+                
+                return isValid;
+            }
+
+            // 验证邮箱格式
+            function validateEmail() {
+                const email = elements.email.value;
+                if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError(elements.emailError, '请输入有效的邮箱地址');
+                    return false;
+                } else {
+                    hideError(elements.emailError);
+                    return true;
+                }
+            }
+
+            // 保存调查数据
+            function saveSurveyData(data) {
+                let surveys = JSON.parse(localStorage.getItem(CONFIG.localStorageKey)) || [];
+                surveys.push(data);
+                localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(surveys));
+            }
+
+            // 删除调查数据
+            function deleteSurveyData(id) {
+                let surveys = JSON.parse(localStorage.getItem(CONFIG.localStorageKey)) || [];
+                surveys = surveys.filter(survey => survey.id !== id);
+                localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(surveys));
+                
+                // 重新显示数据
+                displayStoredData(elements.dataFilter.value);
+            }
+
+            // 显示存储的数据
+            function displayStoredData(filter = 'all') {
+                // 显示加载指示器
+                elements.dataLoader.classList.remove('hidden');
+                
+                // 模拟数据加载延迟
+                setTimeout(() => {
+                    const surveys = JSON.parse(localStorage.getItem(CONFIG.localStorageKey)) || [];
+                    let filteredSurveys = [...surveys];
+                    
+                    // 应用筛选
+                    const now = new Date();
+                    switch(filter) {
+                        case 'today':
+                            filteredSurveys = surveys.filter(survey => {
+                                const surveyDate = new Date(survey.date);
+                                return surveyDate.toDateString() === now.toDateString();
+                            });
+                            break;
+                        case 'week':
+                            const startOfWeek = new Date(now);
+                            startOfWeek.setDate(now.getDate() - now.getDay());
+                            filteredSurveys = surveys.filter(survey => {
+                                const surveyDate = new Date(survey.date);
+                                return surveyDate >= startOfWeek;
+                            });
+                            break;
+                        case 'month':
+                            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+                            filteredSurveys = surveys.filter(survey => {
+                                const surveyDate = new Date(survey.date);
+                                return surveyDate >= startOfMonth;
+                            });
+                            break;
+                        case 'negative':
+                            filteredSurveys = surveys.filter(survey => 
+                                survey.taste === '不好' || survey.taste === '差' || 
+                                parseInt(survey.overallRating) <= 2
+                            );
+                            break;
+                        case 'positive':
+                            filteredSurveys = surveys.filter(survey => 
+                                survey.taste === '非常好' || survey.taste === '好' || 
+                                parseInt(survey.overallRating) >= 4
+                            );
+                            break;
+                    }
+                    
+                    if (filteredSurveys.length === 0) {
+                        elements.dataContainer.innerHTML = '<p>没有找到匹配的数据</p>';
+                        elements.chartContainer.classList.add('hidden');
+                        elements.dataLoader.classList.add('hidden');
+                        return;
+                    }
+                    
+                    // 显示数据表格
+                    let html = `
+                        <p>共 ${filteredSurveys.length} 条记录 (总计 ${surveys.length} 条)</p>
+                        <table class="data-table">
+                            <tr>
+                                <th>日期</th>
+                                <th>称呼</th>
+                                <th>用餐时段</th>
+                                <th>整体评分</th>
+                                <th>味道评价</th>
+                                <th>不满意菜品</th>
+                                <th>推荐菜品</th>
+                                <th>提交时间</th>
+                                <th>操作</th>
+                            </tr>
+                    `;
+                    
+                    filteredSurveys.forEach(survey => {
+                        html += `
+                            <tr>
+                                <td>${survey.date}</td>
+                                <td>${survey.customerName}</td>
+                                <td>${survey.mealTime}</td>
+                                <td>${'★'.repeat(survey.overallRating)}</td>
+                                <td>${survey.taste}</td>
+                                <td>${survey.badDishes === '无' ? '-' : survey.badDishes}</td>
+                                <td>${survey.dishName === '无' ? '-' : survey.dishName}</td>
+                                <td>${survey.submitTime}</td>
+                                <td class="action-cell">
+                                    <button class="btn-danger delete-btn" data-id="${survey.id}">删除</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += '</table>';
+                    elements.dataContainer.innerHTML = html;
+                    
+                    // 添加删除按钮事件监听
+                    document.querySelectorAll('.delete-btn').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const id = parseInt(this.getAttribute('data-id'));
+                            if(confirm('确定要删除这条记录吗？')) {
+                                deleteSurveyData(id);
+                            }
+                        });
+                    });
+                    
+                    // 隐藏加载指示器
+                    elements.dataLoader.classList.add('hidden');
+                    
+                    // 如果有图表库，可以在这里初始化图表
+                    // initCharts(filteredSurveys);
+                }, 800);
+            }
+
+            // 导出数据为CSV
+            function exportData() {
+                // 显示加载指示器
+                toggleButtonLoading(elements.exportDataBtn, true);
+                
+                setTimeout(() => {
+                    const surveys = JSON.parse(localStorage.getItem(CONFIG.localStorageKey)) || [];
+                    if(surveys.length === 0) {
+                        alert('没有可导出的数据');
+                        toggleButtonLoading(elements.exportDataBtn, false);
+                        return;
+                    }
+                    
+                    // 创建CSV内容
+                    let csvContent = "data:text/csv;charset=utf-8,";
+                    
+                    // 添加表头
+                    const headers = Object.keys(surveys[0]);
+                    csvContent += headers.join(",") + "\r\n";
+                    
+                    // 添加数据行
+                    surveys.forEach(survey => {
+                        const row = headers.map(header => {
+                            // 处理数组类型的值
+                            if(Array.isArray(survey[header])) {
+                                return `"${survey[header].join(', ')}"`;
+                            }
+                            return `"${survey[header]}"`;
+                        });
+                        csvContent += row.join(",") + "\r\n";
+                    });
+                    
+                    // 创建下载链接
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", "餐饮满意度调查数据.csv");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // 隐藏加载指示器
+                    toggleButtonLoading(elements.exportDataBtn, false);
+                }, 800);
+            }
+
+            // 切换数据分析视图
+            function toggleDataAnalysis() {
+                elements.chartContainer.classList.toggle('hidden');
+                
+                if(!elements.chartContainer.classList.contains('hidden')) {
+                    // 如果有图表库，可以在这里显示图表
+                    alert('数据分析功能需要引入图表库(如Chart.js)来实现');
+                    // 实际实现可能如下:
+                    // initCharts(JSON.parse(localStorage.getItem(CONFIG.localStorageKey)) || []);
+                }
+            }
+
+            // 更新进度条
+            function updateProgressBar(percent) {
+                elements.surveyProgress.style.width = `${percent}%`;
+            }
+
+            // 显示错误信息
+            function showError(element, message) {
+                if(element) {
+                    element.textContent = message;
+                    element.classList.remove('hidden');
+                }
+            }
+
+            // 隐藏错误信息
+            function hideError(element) {
+                if(element) {
+                    element.textContent = '';
+                    element.classList.add('hidden');
+                }
+            }
+            
+            // 切换按钮加载状态
+            function toggleButtonLoading(button, isLoading) {
+                if(isLoading) {
+                    button.disabled = true;
+                    button.classList.add('button-loading');
+                    button.querySelector('.button-loader').classList.remove('hidden');
+                } else {
+                    button.disabled = false;
+                    button.classList.remove('button-loading');
+                    button.querySelector('.button-loader').classList.add('hidden');
+                }
+            }
+
+            // 初始化
+            initEventListeners();
+            
+            // 如果有图表库，可以在这里初始化
+            // function initCharts(surveyData) { ... }
+        });
+    </script>
+</body>
+</html>
